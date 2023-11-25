@@ -127,7 +127,7 @@ public class Tablero {
     }
   }
 
-  public void imprimirLetras() {
+  /*public void imprimirLetras() {
     System.out.println(" ");
     System.out.println("------------");
     for (int columna = 0; columna < tableroLetras.length; columna++) {
@@ -139,7 +139,7 @@ public class Tablero {
 
     System.out.println("------------");
     System.out.println(" ");
-  }
+  }*/
 
   public void imprimirNumeros() {
     System.out.println(" ");

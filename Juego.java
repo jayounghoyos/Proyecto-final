@@ -82,20 +82,21 @@ public class Juego {
                 System.out.println("No son una pareja. Siguiente turno.");
               }
 
-              juegoTerminado = true;
-              for (int[] fila : tablero.getTableroVisual()) {
-                for (int num : fila) {
-                  if (num != -1) {
-                    juegoTerminado = false;
-                    break;
-                  }
+                int casillasAbiertas = 0;
+                for (int[] fila : tablero.getTableroVisual()) {
+                    for (int num : fila) {
+                        if (num >= 0) { 
+                            casillasAbiertas++;
+                        }
+                    }
                 }
-                if (!juegoTerminado) break;
-              }
 
-              if (juegoTerminado) {
-                break;
-              }
+                juegoTerminado = casillasAbiertas == 0;
+
+                // Si el juego termina, salir del bucle
+                if (juegoTerminado) {
+                    break;
+                }
             }
           }
 
@@ -207,7 +208,6 @@ public class Juego {
           tablero.llenarTableroLetras();
           tablero.llenarTableroVisual();
 
-          tablero.imprimirLetras();
           tablero.imprimirNumeros();
           tablero.guardarTableroEnArchivo();
 
