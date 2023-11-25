@@ -66,7 +66,7 @@ public class Tablero {
     'Z',
   };
   String reset = "\u001B[0m";
-  String cyan="\033[36m";
+  String cyan = "\033[36m";
   String yellow = "\033[33m";
 
   public Tablero(int tamanio) {
@@ -147,7 +147,7 @@ public class Tablero {
     for (int i = 0; i < tableroVisual.length; i++) {
       for (int j = 0; j < tableroVisual[i].length; j++) {
         if (tableroVisual[i][j] == -1) {
-          System.out.print(cyan + " X "+ reset);
+          System.out.print(cyan + " X " + reset);
         } else if (tableroVisual[i][j] == -2) {
           System.out.print(yellow + " O " + reset);
         } else {
@@ -184,7 +184,9 @@ public class Tablero {
       String line;
       int fila = 0;
 
-      while ((line = reader.readLine()) != null) {
+      while (
+        (line = reader.readLine()) != null && fila < tableroLetras.length
+      ) {
         String[] letras = line.trim().split("\\s+");
         for (
           int columna = 0;
