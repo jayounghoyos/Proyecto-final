@@ -16,13 +16,7 @@ public class Juego {
     String red = "\033[31m";
     String green = "\033[32m";
     String yellow = "\033[33m";
-    /*
-     * String blue="\033[34m";
-     * String purple="\033[35m";
-     * String cyan="\033[36m";
-     * String white="\033[37m";
-     * String black="\033[30m";
-     */
+
     Scanner kb = new Scanner(System.in);
 
     while (!salir) {
@@ -51,6 +45,12 @@ public class Juego {
           System.out.print("Ingrese el nombre del segundo jugador: ");
           String nombreJugador2 = kb.next();
           Jugador jugador2 = new Jugador(nombreJugador2, 0);
+
+          System.out.println(
+            green +
+            "el primer jugador esta marcado con una X y el otro Jugador con una O" +
+            reset
+          );
 
           boolean juegoTerminado = false;
           while (!juegoTerminado) {

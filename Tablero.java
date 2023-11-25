@@ -65,6 +65,9 @@ public class Tablero {
     'z',
     'Z',
   };
+  String reset = "\u001B[0m";
+  String cyan="\033[36m";
+  String yellow = "\033[33m";
 
   public Tablero(int tamanio) {
     this.tableroLetras = new char[tamanio][tamanio];
@@ -94,14 +97,6 @@ public class Tablero {
     int tamanioTablero = tableroLetras.length * tableroLetras[0].length;
     int numParejas = (tamanioTablero - 1) / 2;
 
-    // Asegúrate de que semilla tenga suficientes letras para las parejas
-    if (semilla.length < numParejas * 2) {
-      throw new IllegalArgumentException(
-        "No hay suficientes letras en semilla para crear las parejas."
-      );
-    }
-
-    // Añadir parejas de letras seleccionadas del arreglo semilla
     for (int i = 0; i < numParejas; i++) {
       listaSemilla.add(semilla[i]);
       listaSemilla.add(semilla[i]); // Agregar la misma letra otra vez para formar una pareja
@@ -152,9 +147,9 @@ public class Tablero {
     for (int i = 0; i < tableroVisual.length; i++) {
       for (int j = 0; j < tableroVisual[i].length; j++) {
         if (tableroVisual[i][j] == -1) {
-          System.out.print("X ");
+          System.out.print(cyan + " X "+ reset);
         } else if (tableroVisual[i][j] == -2) {
-          System.out.print("O ");
+          System.out.print(yellow + " O " + reset);
         } else {
           System.out.print(tableroVisual[i][j] + " ");
         }
