@@ -1,5 +1,5 @@
-f E B c d 
-a D A C b 
-f D C * e 
-b F F e d 
-A c B E a 
+d e F E d 
+B C b B E 
+f F a e c 
+C A * a b 
+f D A c D 

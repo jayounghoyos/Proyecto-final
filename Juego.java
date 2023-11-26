@@ -46,9 +46,18 @@ public class Juego {
           String nombreJugador2 = kb.next();
           Jugador jugador2 = new Jugador(nombreJugador2, 0);
 
+          int totalParejas =
+            (
+              tablero.getTableroLetras().length *
+              tablero.getTableroLetras()[0].length -
+              1
+            ) /
+            2;
+          int puntosParaGanar = totalParejas / 2 + 1; // Más de la mitad de las parejas para ganar
+
           System.out.println(
             green +
-            "el primer jugador esta marcado con una X y el otro Jugador con una O" +
+            "El primer jugador está marcado con una X y el segundo jugador con una O" +
             reset
           );
 
@@ -72,57 +81,67 @@ public class Juego {
                 tablero.getTableroLetras()[fila1][columna1] ==
                 tablero.getTableroLetras()[fila2][columna2]
               ) {
-                System.out.println("¡Encontraste una pareja!");
+                System.out.println(green + "¡Encontraste una pareja!" + reset);
                 jugadorActual.setPuntos(jugadorActual.getPuntos() + 1);
-
+                System.out.println(
+                  jugadorActual.getNombre() +
+                  " tiene ahora " +
+                  jugadorActual.getPuntos() +
+                  " puntos."
+                );
                 int marca = jugadorActual == jugador1 ? -1 : -2; // -1 para jugador1, -2 para jugador2
                 tablero.getTableroVisual()[fila1][columna1] = marca;
                 tablero.getTableroVisual()[fila2][columna2] = marca;
+
+                if (jugadorActual.getPuntos() >= puntosParaGanar) {
+                  System.out.println(
+                    green +
+                    jugadorActual.getNombre() +
+                    " ha ganado el juego!" +
+                    reset
+                  );
+                  juegoTerminado = true;
+                  break; // Salir del bucle for
+                }
               } else {
-                System.out.println("No son una pareja. Siguiente turno.");
+                System.out.println(
+                  red + "No son una pareja. Siguiente turno." + reset
+                );
               }
-
-                int casillasAbiertas = 0;
-                for (int[] fila : tablero.getTableroVisual()) {
-                    for (int num : fila) {
-                        if (num >= 0) { 
-                            casillasAbiertas++;
-                        }
-                    }
-                }
-
-                juegoTerminado = casillasAbiertas == 0;
-
-                // Si el juego termina, salir del bucle
-                if (juegoTerminado) {
-                    break;
-                }
             }
           }
 
-          System.out.println("El juego ha terminado!");
+          System.out.println(green + "El juego ha terminado!" + reset);
           System.out.println(
-            jugador1.getNombre() + " tiene " + jugador1.getPuntos() + " puntos."
+            yellow +
+            jugador1.getNombre() +
+            " tiene " +
+            jugador1.getPuntos() +
+            " puntos." +
+            reset
           );
           System.out.println(
-            jugador2.getNombre() + " tiene " + jugador2.getPuntos() + " puntos."
+            yellow +
+            jugador2.getNombre() +
+            " tiene " +
+            jugador2.getPuntos() +
+            " puntos." +
+            reset
           );
-          // Determinar y mostrar quién es el ganador
+
           if (jugador1.getPuntos() > jugador2.getPuntos()) {
-            System.out.println(jugador1.getNombre() + " gana!");
+            System.out.println(green + jugador1.getNombre() + " gana!" + reset);
           } else if (jugador2.getPuntos() > jugador1.getPuntos()) {
-            System.out.println(jugador2.getNombre() + " gana!");
+            System.out.println(green + jugador2.getNombre() + " gana!" + reset);
           } else {
-            System.out.println("Es un empate!");
+            System.out.println(red + "Es un empate!" + reset);
           }
 
           break;
         case 2:
-          if (tableroCreado == false || usandoTablero == false) {
+          if (tablero == null || !tableroCreado || !usandoTablero) {
             System.out.println(
-              red +
-              "Primero tienes que crear o cargar un archivo para jugar" +
-              reset
+              red + "Primero debes crear o cargar un tablero." + reset
             );
             break;
           }
@@ -171,6 +190,9 @@ public class Juego {
                     fila++;
                   }
                 }
+
+                // Llenar el tablero visual después de cargar el tablero de letras
+                tablero.llenarTableroVisual();
               } catch (IOException e) {
                 System.out.println(
                   "Error al volver a leer el archivo: " + e.getMessage()
