@@ -160,9 +160,9 @@ public class Tablero {
     System.out.println(" ");
   }
 
-  public void guardarTableroEnArchivo() {
+  public void guardarTableroEnArchivo(String nombreArchivo) {
     try (
-      BufferedWriter writer = new BufferedWriter(new FileWriter("tablero.txt"))
+      BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))
     ) {
       for (int i = 0; i < tableroLetras.length; i++) {
         for (int j = 0; j < tableroLetras[i].length; j++) {
@@ -177,9 +177,9 @@ public class Tablero {
     }
   }
 
-  public void cargarTableroDesdeArchivo() {
+  public void cargarTableroDesdeArchivo(String nombreArchivo) {
     try (
-      BufferedReader reader = new BufferedReader(new FileReader("tablero.txt"))
+      BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))
     ) {
       String line;
       int fila = 0;
