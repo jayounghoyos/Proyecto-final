@@ -64,52 +64,47 @@ public class Juego {
           boolean juegoTerminado = false;
           while (!juegoTerminado) {
             for (Jugador jugadorActual : new Jugador[] { jugador1, jugador2 }) {
-              System.out.println("Turno de " + jugadorActual.getNombre());
-              tablero.imprimirNumeros();
-
-              System.out.print("Elige el primer número: ");
-              int eleccion1 = kb.nextInt() - 1;
-              System.out.print("Elige el segundo número: ");
-              int eleccion2 = kb.nextInt() - 1;
-
-              int fila1 = eleccion1 / tablero.getTableroVisual().length;
-              int columna1 = eleccion1 % tablero.getTableroVisual().length;
-              int fila2 = eleccion2 / tablero.getTableroVisual().length;
-              int columna2 = eleccion2 % tablero.getTableroVisual().length;
-
-              if (
-                tablero.getTableroLetras()[fila1][columna1] ==
-                tablero.getTableroLetras()[fila2][columna2]
-              ) {
-                System.out.println(green + "¡Encontraste una pareja!" + reset);
-                jugadorActual.setPuntos(jugadorActual.getPuntos() + 1);
-                System.out.println(
-                  jugadorActual.getNombre() +
-                  " tiene ahora " +
-                  jugadorActual.getPuntos() +
-                  " puntos."
-                );
-                int marca = jugadorActual == jugador1 ? -1 : -2; // -1 para jugador1, -2 para jugador2
-                tablero.getTableroVisual()[fila1][columna1] = marca;
-                tablero.getTableroVisual()[fila2][columna2] = marca;
-
-                if (jugadorActual.getPuntos() >= puntosParaGanar) {
-                  System.out.println(
-                    green +
-                    jugadorActual.getNombre() +
-                    " ha ganado el juego!" +
-                    reset
-                  );
-                  juegoTerminado = true;
-                  break; // Salir del bucle for
+                System.out.println("Turno de " + jugadorActual.getNombre());
+                tablero.imprimirNumeros();
+        
+                System.out.print("Elige el primer número: ");
+                int eleccion1 = kb.nextInt() - 1;
+                System.out.print("Elige el segundo número: ");
+                int eleccion2 = kb.nextInt() - 1;
+        
+                int fila1 = eleccion1 / tablero.getTableroVisual().length;
+                int columna1 = eleccion1 % tablero.getTableroVisual().length;
+                int fila2 = eleccion2 / tablero.getTableroVisual().length;
+                int columna2 = eleccion2 % tablero.getTableroVisual().length;
+        
+                if (tablero.getTableroLetras()[fila1][columna1] == '*') {
+                    System.out.println("¡Has encontrado un comodín!");
+                    jugadorActual.setPuntos(jugadorActual.getPuntos() + 1);
+                } else if (tablero.getTableroLetras()[fila2][columna2] == '*') {
+                    System.out.println("¡Has encontrado un comodín!");
+                    jugadorActual.setPuntos(jugadorActual.getPuntos() + 1);
+                } else if (tablero.getTableroLetras()[fila1][columna1] ==
+                           tablero.getTableroLetras()[fila2][columna2]) {
+                    System.out.println("¡Encontraste una pareja!");
+                    jugadorActual.setPuntos(jugadorActual.getPuntos() + 1);
+                    int marca = jugadorActual == jugador1 ? -1 : -2;
+                    tablero.getTableroVisual()[fila1][columna1] = marca;
+                    tablero.getTableroVisual()[fila2][columna2] = marca;
+        
+                    if (jugadorActual.getPuntos() >= puntosParaGanar) {
+                        System.out.println(jugadorActual.getNombre() +
+                                           " ha ganado el juego!");
+                        juegoTerminado = true;
+                        break; // Salir del bucle for
+                    }
+                } else {
+                    System.out.println("No son una pareja. Siguiente turno.");
                 }
-              } else {
-                System.out.println(
-                  red + "No son una pareja. Siguiente turno." + reset
-                );
-              }
             }
-          }
+        }
+        
+        // Resto del código existente sin cambios
+        
 
           System.out.println(green + "El juego ha terminado!" + reset);
           System.out.println(
@@ -139,14 +134,19 @@ public class Juego {
 
           break;
         case 2:
-          if (tablero == null || !tableroCreado || !usandoTablero) {
-            System.out.println(
-              red + "Primero debes crear o cargar un tablero." + reset
-            );
-            break;
-          }
-
+        if (tablero == null || !tableroCreado || !usandoTablero) {
+          System.out.println(red + "Primero debes crear o cargar un tablero." + reset);
           break;
+        }
+
+        Maquina maquina = new Maquina("IA");
+        boolean juegoTerminadoConMaquina = false;
+        
+        /*while(!juegoTerminadoConMaquina){
+          System.out.pritnln("Turno de "  );
+        }*/
+        
+        break;
         case 3:
           try (
             BufferedReader reader = new BufferedReader(
